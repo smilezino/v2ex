@@ -53,7 +53,7 @@ class V2ex {
 			return ;
 		}
 		$url = self::MISSION_DAILY_ACTION_URL."?once=".$code;
-		echo "mission url:".$url;
+		echo date('Y-m-d H:i:s')." mission url:".$url."\n";
 		$this->send($url);
 	}
 	
