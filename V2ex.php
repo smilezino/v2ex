@@ -3,7 +3,7 @@
 class V2ex {
 	const COOKIE='/data/v2ex.cookie';
 	const USERAGENT='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.116 Safari/537.36';
-	const REFFER = 'http://v2ex.com/signin';
+	const REFERER = 'http://v2ex.com/signin';
 	const LOGIN_URL='http://v2ex.com/signin';
 	const LOGIN_ACTION_URL='http://v2ex.com/signin';
 	const MISSION_DAILY_URL='http://v2ex.com/mission/daily';
@@ -53,7 +53,7 @@ class V2ex {
 			return ;
 		}
 		$url = self::MISSION_DAILY_ACTION_URL."?once=".$code;
-		echo "mission url:".$url;
+		echo date('Y-m-d H:i:s')." mission url:".$url."\n";
 		$this->send($url);
 	}
 	
@@ -84,7 +84,9 @@ class V2ex {
 		}
 		if(!empty($params) && is_array($params)) {
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
-			curl_setopt($ch, CURLOPT_REFERER, self::REFFER);
+			curl_setopt($ch, CURLOPT_REFERER, self::REFERER);
+		} else {
+			curl_setopt($ch, CURLOPT_REFERER, self::MISSION_DAILY_URL);
 		}
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 		curl_setopt($ch, CURLOPT_USERAGENT, self::USERAGENT);
