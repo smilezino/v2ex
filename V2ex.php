@@ -18,7 +18,7 @@ class V2ex {
 		$v2ex = new V2ex();
 		$v2ex->u = $u;
 		$v2ex->p = $p;
-		$v2ex->cookie = $cookie;
+		$v2ex->cookie = __DIR__ . $cookie;
 		$v2ex->login();
 		return $v2ex;
 	}
@@ -79,6 +79,8 @@ class V2ex {
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); //返回字符串，而非直接输出
 		curl_setopt($ch, CURLOPT_COOKIEFILE,  $this->cookie); //发送cookies
 		curl_setopt($ch, CURLOPT_COOKIEJAR,  $this->cookie); //存储cookies
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 		if($type==="POST") {
 			curl_setopt($ch, CURLOPT_POST, 1);
 		}
