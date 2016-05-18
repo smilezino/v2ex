@@ -11,9 +11,9 @@ class V2ex {
 	private $u;
 	private $p;
 	private $cookie;
-	
+
 	private $isLogin;
-	
+
 	public static function init($u, $p, $cookie=self::COOKIE) {
 		$v2ex = new V2ex();
 		$v2ex->u = $u;
@@ -22,27 +22,29 @@ class V2ex {
 		$v2ex->login();
 		return $v2ex;
 	}
-	
+
 	public function login() {
 		$html = $this->loginPage();
+		preg_match('/用户名.+?name="(.+?)"/s', $html, $username_field);
+		preg_match('/密码.+?name="(.+?)"/s', $html, $password_field);
 		$params = array(
-			'u'=>$this->u,
-			'p'=>$this->p,
+			$username_field[1]=>$this->u,
+			$password_field[1]=>$this->p,
 			'once'=>$this->getLoginCode($html),
 			'next'=>'/'
 		);
 		$v2ex = $this->send(self::LOGIN_ACTION_URL, "POST", $params);
 		$this->isLogin = true;
 	}
-	
+
 	private function loginPage() {
 		return $this->send(self::LOGIN_URL);
 	}
-	
+
 	private function missionDailyPage() {
 		return $this->send(self::MISSION_DAILY_URL);
 	}
-	
+
 	public function missionDaily() {
 		if($this->isLogin!==true) {
 			$this->login();
@@ -56,7 +58,7 @@ class V2ex {
 		echo date('Y-m-d H:i:s')." mission url:".$url."\n";
 		$this->send($url);
 	}
-	
+
 	private function getLoginCode($html) {
 		$pattern = '/input\stype="hidden"\svalue="(\w{5})"\sname="once"/iu';
 		if(preg_match($pattern, $html, $matchs)) {
@@ -64,7 +66,7 @@ class V2ex {
 		}
 		return !empty($code)?$code:false;
 	}
-	
+
 	private function getMissionCode($html) {
 		$pattern = '/mission\/daily\/redeem\?once=(\w{5})/iu';
 		if(preg_match($pattern, $html, $matchs)) {
@@ -72,7 +74,7 @@ class V2ex {
 		}
 		return !empty($code)?$code:false;
 	}
-	
+
 	private function send($url, $type='GET', $params=false) {
 		$ch = curl_init($url); //初始化
 		curl_setopt($ch, CURLOPT_HEADER, 0); //不返回header部分
