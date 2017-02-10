@@ -3,11 +3,11 @@
 class V2ex {
 	const COOKIE='/data/v2ex.cookie';
 	const USERAGENT='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.116 Safari/537.36';
-	const REFERER = 'http://v2ex.com/signin';
-	const LOGIN_URL='http://v2ex.com/signin';
-	const LOGIN_ACTION_URL='http://v2ex.com/signin';
-	const MISSION_DAILY_URL='http://v2ex.com/mission/daily';
-	const MISSION_DAILY_ACTION_URL='http://v2ex.com/mission/daily/redeem';
+	const REFERER = 'https://v2ex.com/signin';
+	const LOGIN_URL='https://v2ex.com/signin';
+	const LOGIN_ACTION_URL='https://v2ex.com/signin';
+	const MISSION_DAILY_URL='https://v2ex.com/mission/daily';
+	const MISSION_DAILY_ACTION_URL='https://v2ex.com/mission/daily/redeem';
 	private $u;
 	private $p;
 	private $cookie;
